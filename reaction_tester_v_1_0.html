@@ -1,0 +1,66 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Reaction Tester - Ver 1.0</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        #box{
+            height:200px;
+            width:200px;
+            background-color:green;
+            display:none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Reaction Tester v1.0</h1>
+    <div id="box"></div>
+
+    <script type="text/javascript">
+        var clickedTime;
+        var createdTime;
+        var respondTime;
+
+        function makeBox() {
+            var randTime = 5000 * Math.random();//Get a random time between 0 to 5000 ms. 
+            setTimeout(function () {
+                document.getElementById("box").style.display = "block";
+                createdTime = Date.now(); //Record the time when the box was created.
+                console.log("createdTime=" + createdTime);
+            }, randTime);
+            console.log("randTime="+randTime);
+        }
+
+        document.getElementById("box").onclick = function () {
+            clickedTime = Date.now(); //Record the time when the box was clicked.
+            console.log("clickedTime=" + clickedTime);
+
+            this.style.display = "none";
+            respondTime = clickedTime - createdTime; //Calculate the respond time. 
+            console.log("respondTime=" + respondTime + "ms");
+            alert("Your respond time is " + respondTime + " ms. PRESS 'OK' TO START ANOTHER GAME"); //Alert the respond time.
+
+            makeBox();
+        }
+
+        //document.getElementById("background").onclick = function () {
+        //     startGame();
+        //}
+
+        
+
+        function startGame() {
+            alert("The green box will be shown on screen in 5 seconds.  Tap the green box as fast as possible when the box appears.    PRESS 'OK' TO START THE GAME");
+            makeBox();
+        }
+        
+        startGame();
+        
+        
+    </script>
+</body>
+</html>

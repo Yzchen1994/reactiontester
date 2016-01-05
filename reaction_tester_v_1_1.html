@@ -1,0 +1,93 @@
+﻿<!doctype html>
+<html>
+<head>
+    <title>Reaction Tester - Ver 1.1</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body{
+            font-family: Tahoma, Verdana, sans-serif;
+        }
+
+        #box{
+            height:200px;
+            width:200px;
+            background-color:green;
+            display:none;
+            position:absolute;
+            top:180px;
+            left:10px;
+        }
+        #border{
+            height:200px;
+            width:200px;
+            border:3px dashed red;
+            position:absolute;
+            top:177px;
+            left:7px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Reaction Tester v1.1</h1>
+    
+    <div id="status">
+        <p>Press "Start Game" button below to get started.</p>
+    </div>
+    <div id="ctrlButton">
+        <button id="startGame">Start Game</button>
+    </div>
+
+    <div id="box_border">
+        
+        <div id="border"></div>
+        <div id="box"></div>
+    </div>
+
+    <script type="text/javascript">
+        var clickedTime;
+        var createdTime;
+        var respondTime;
+
+        function makeBox() {
+            var randTime = 5000 * Math.random();//Get a random time between 0 to 5000 ms. 
+            setTimeout(function () {
+                document.getElementById("box").style.display = "block";
+                createdTime = Date.now(); //Record the time when the box was created.
+                console.log("createdTime=" + createdTime);
+            }, randTime);
+            console.log("randTime="+randTime);
+        }
+
+        document.getElementById("box").onclick = function () {
+            clickedTime = Date.now(); //Record the time when the box was clicked.
+            console.log("clickedTime=" + clickedTime);
+
+            this.style.display = "none";
+            respondTime = clickedTime - createdTime; //Calculate the respond time. 
+            console.log("respondTime=" + respondTime + "ms");
+            document.getElementById("status").innerHTML="<p>Your respond time is " + respondTime + " ms. Press 'Start Game' button below to start another game.</p>"; //Alert the respond time.
+            
+            document.getElementById("ctrlButton").onclick = function () {
+                startGame();
+            }
+            
+        }
+      
+        function startGame() {
+            document.getElementById("status").innerHTML="<p>The green box will be shown on screen in 5 seconds.  Tap the green box as fast as possible when the box appears.</p>";
+            makeBox();
+        }
+        
+        document.getElementById("ctrlButton").onclick = function () {
+            startGame();
+        }
+            
+        
+        
+    </script>
+</body>
+</html>
